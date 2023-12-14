@@ -9,31 +9,52 @@ let servicePrice1 = +prompt("Сколько это будет стоить?");
 let service2 = prompt("Какой дополнительный тип услуги нужен?");
 let servicePrice2 = +prompt("Сколько это будет стоить?");
 let rollback = 2;
-let fullPrice = screenPrice + servicePrice1 + servicePrice2;
-let servicePercentPrice = Math.ceil(fullPrice - fullPrice * (rollback / 100));
+let fullPrice;
+let allServicePrices;
+let servicePercentPrice;
 
-switch (true) {
-    case fullPrice >= 30000:
-        console.log("Даем скидку в 10%");
-        break
-    case 15000 <= fullPrice && fullPrice < 30000:
-        console.log("Даем скидку в 5%");
-        break
-    case 0 <= fullPrice && fullPrice < 15000:
-        console.log("Скидка не предусмотрена");
-        break
-    case fullPrice < 0:
-        console.log("Что то пошло не так");
-        break
-};
+const showTypeOf = function (variable) {
+    console.log(typeof variable);
+}
 
-console.log(typeof title);
-console.log(typeof fullPrice);
-console.log(typeof adaptive);
+const getAllServicePrices = function () {
+    return (servicePrice1 + servicePrice2);
+}
 
-console.log(screens.length);
-console.log(`Стоимость верстки экранов ${screenPrice} рублей/долларов/гривен/юани`);
-console.log(`Стоимость разработки сайта ${fullPrice} рублей/долларов/гривен/юани`);
+function getFullPrice() {
+    return (screenPrice + allServicePrices);
+}
+
+function getTitle() {
+    return (title.trim()[0].toUpperCase() + title.trim().slice(1).toLowerCase());
+}
+
+function getServicePercentPrices() {
+    return (Math.ceil(fullPrice - fullPrice * (rollback / 100)));
+}
+
+const getRollbackMessage = function (price) {
+    switch (true) {
+        case price >= 30000:
+            return "Даем скидку в 10%";
+        case 15000 <= price && price < 30000:
+            return "Даем скидку в 5%";
+        case 0 <= price && price < 15000:
+            return "Скидка не предусмотрена";
+        case price < 0:
+            return "Что то пошло не так";
+    };
+}
+
+allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice();
+title = getTitle();
+servicePercentPrice = getServicePercentPrices();
+
+showTypeOf(title);
+showTypeOf(fullPrice);
+showTypeOf(adaptive);
+
 console.log(screens.toLowerCase().split(", "));
-console.log(fullPrice * (rollback / 100));
+console.log(getRollbackMessage(fullPrice));
 console.log(servicePercentPrice);
