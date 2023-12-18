@@ -22,9 +22,10 @@ const asking = function () {
 
     do {
         screenPrice = prompt("Сколько будет стоить данная работа?");
+        screenPrice = parseFloat(screenPrice);
     } while (!isNumber(screenPrice));
 
-    screenPrice = +screenPrice;
+    // screenPrice = +screenPrice;
 
     adaptive = confirm("Нужен ли адаптив на сайте?");
 }
@@ -47,8 +48,9 @@ const getAllServicePrices = function () {
 
         while (!isNumber(servicePrice)) {
             servicePrice = prompt("Сколько это будет стоить?");
+            servicePrice = parseFloat(servicePrice);
         }
-        sum += +servicePrice;
+        sum += servicePrice;
     }
 
     return sum;
