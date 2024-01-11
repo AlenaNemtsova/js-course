@@ -1,5 +1,22 @@
 'use strict';
 
+const title = document.getElementsByTagName('h1')[0];
+const calcBtn = document.getElementsByClassName('handler_btn')[0];
+const resetBtn = document.getElementsByClassName('handler_btn')[1];
+const screenBtn = document.querySelector('.screen-btn');
+const otherItemsPercent = document.querySelectorAll('.other-items.percent')
+const otherItemsNumber = document.querySelectorAll('.other-items.number')
+const inputRange = document.querySelector('.rollback input[type="range"]')
+const rangeValue = document.querySelector('.rollback .range-value')
+
+const totalInput = document.getElementsByClassName('total-input')
+for (let elem of totalInput) {
+    console.log(elem)
+}
+
+let screen = document.querySelectorAll('.screen')
+
+
 const appData = {
     title: '',
     screens: [],
@@ -11,7 +28,7 @@ const appData = {
     allServicePrices: 0,
     servicePercentPrice: 0,
     start: function () {
-        appData.asking();
+        // appData.asking();
         appData.addPrices();
         appData.getFullPrice();
         appData.getTitle();
@@ -39,7 +56,6 @@ const appData = {
             appData.screens.push({ id: i, name: name, price: price });
         }
 
-        //стоимость услуг
         for (let i = 0; i < 2; i++) {
             let name;
             let price = 0;
@@ -62,18 +78,10 @@ const appData = {
     },
 
     addPrices: function () {
-        //считаем стоимость работы, сумму значений массива screens
-        //с помощью цикла
-        // for (let screen of appData.screens) {
-        //     appData.screenPrice += +screen.price;
-        // }
-
-        //или методом reduce
         appData.screenPrice = appData.screens.reduce((accumulator, currentValue) => accumulator + +currentValue.price,
             0,
         );
 
-        //сумма доп. услуг
         for (let key in appData.services) {
             appData.allServicePrices += appData.services[key]
         }
