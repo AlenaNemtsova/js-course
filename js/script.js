@@ -38,7 +38,9 @@ const appData = {
         startBtn.addEventListener('click', this.start.bind(appData))
         buttonPlus.addEventListener('click', this.addScreenBlock.bind(appData))
         inputRange.addEventListener('input', this.addRollback.bind(appData))
+        resetBtn.addEventListener('click', this.reset.bind(appData))
     },
+
     addTitle: function () {
         document.title = title.textContent;
     },
@@ -123,8 +125,6 @@ const appData = {
         })
     },
 
-
-
     addPrices: function () {
         this.screenPrice = this.screens.reduce((accumulator, currentValue) => accumulator + +currentValue.price,
             0,
@@ -143,15 +143,32 @@ const appData = {
         }
 
         this.fullPrice = +this.screenPrice + this.servicePricesPercent + this.servicePricesNumber;
-
-
         this.servicePercentPrice = Math.ceil(this.fullPrice - this.fullPrice * (this.rollback / 100));
-
     },
 
     addRollback: function (event) {
         rangeValue.textContent = `${event.target.value}%`;
         this.rollback = event.target.value;
+    },
+
+    reset: function () {
+        this.screens = [];
+        startBtn.style.display = null;
+        resetBtn.style.display = 'none';
+
+        screens.forEach((screen, index) => {
+            const select = screen.querySelector('select');
+            const input = screen.querySelector('input');
+            select.removeAttribute('disabled');
+            input.removeAttribute('disabled');
+
+            if (index > 0) {
+                screens[index].remove();
+            };
+
+            select.value = '';
+            input.value = '';
+        });
     },
 
     logger: function () {
