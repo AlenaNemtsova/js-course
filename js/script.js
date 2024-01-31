@@ -17,6 +17,10 @@ const totalCountOther = document.getElementsByClassName('total-input')[2];
 const fullTotalCount = document.getElementsByClassName('total-input')[3];
 const totalICountRollback = document.getElementsByClassName('total-input')[4];
 
+const csmOpen = document.querySelector('#cms-open');
+const cmsHidden = document.querySelector('.hidden-cms-variants');
+const cmsSelect = document.querySelector('#cms-select');
+
 let screens = document.querySelectorAll('.screen')
 
 const appData = {
@@ -39,6 +43,27 @@ const appData = {
         buttonPlus.addEventListener('click', this.addScreenBlock.bind(appData))
         inputRange.addEventListener('input', this.addRollback.bind(appData))
         resetBtn.addEventListener('click', this.reset.bind(appData))
+        csmOpen.addEventListener('input', this.openCms.bind(appData))
+        cmsSelect.addEventListener('change', this.selectCmsOptions.bind(appData))
+    },
+
+    openCms: function () {
+        if (csmOpen.checked) {
+            cmsHidden.style.display = 'flex'
+        } else {
+            cmsHidden.style.display = 'none';
+        }
+    },
+
+    selectCmsOptions: function () {
+        const cmsHiddenOtherBlock = document.querySelector('.hidden-cms-variants .main-controls__input');
+
+        if (cmsSelect.value === 'other') {
+            console.log('other')
+            cmsHiddenOtherBlock.style.display = 'block'
+        } else {
+            cmsHiddenOtherBlock.style.display = 'none'
+        }
     },
 
     addTitle: function () {
@@ -144,6 +169,10 @@ const appData = {
 
         this.fullPrice = +this.screenPrice + this.servicePricesPercent + this.servicePricesNumber;
         this.servicePercentPrice = Math.ceil(this.fullPrice - this.fullPrice * (this.rollback / 100));
+
+        if (cmsSelect.value === '50') {
+            this.fullPrice = this.fullPrice + this.fullPrice / 2
+        }
     },
 
     addRollback: function (event) {
@@ -155,6 +184,12 @@ const appData = {
         this.screens = [];
         startBtn.style.display = null;
         resetBtn.style.display = 'none';
+        cmsHidden.style.display = 'none';
+
+        if (csmOpen.checked) {
+            csmOpen.checked = false;
+        }
+        console.log(cmsSelect.value)
 
         screens.forEach((screen, index) => {
             const select = screen.querySelector('select');
