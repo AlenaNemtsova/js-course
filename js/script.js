@@ -59,7 +59,6 @@ const appData = {
         const cmsHiddenOtherBlock = document.querySelector('.hidden-cms-variants .main-controls__input');
 
         if (cmsSelect.value === 'other') {
-            console.log('other')
             cmsHiddenOtherBlock.style.display = 'block'
         } else {
             cmsHiddenOtherBlock.style.display = 'none'
@@ -188,8 +187,8 @@ const appData = {
 
         if (csmOpen.checked) {
             csmOpen.checked = false;
+            cmsSelect.value = '';
         }
-        console.log(cmsSelect.value)
 
         screens.forEach((screen, index) => {
             const select = screen.querySelector('select');
